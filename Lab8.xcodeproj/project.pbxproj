@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		520844F321BF2D2200B9258A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 520844F221BF2D2200B9258A /* main.cpp */; };
-		5208450D21BF301F00B9258A /* BST.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5208450A21BF301E00B9258A /* BST.cpp */; };
+		5208450D21BF301F00B9258A /* AVL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 5208450A21BF301E00B9258A /* AVL.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -42,9 +42,8 @@
 		5208450621BF2EA900B9258A /* file4.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = file4.txt; sourceTree = "<group>"; };
 		5208450721BF2EA900B9258A /* key_file3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = key_file3.txt; sourceTree = "<group>"; };
 		5208450821BF301E00B9258A /* Node.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Node.h; sourceTree = "<group>"; };
-		5208450921BF301E00B9258A /* BSTInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSTInterface.h; sourceTree = "<group>"; };
-		5208450A21BF301E00B9258A /* BST.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BST.cpp; sourceTree = "<group>"; };
-		5208450B21BF301E00B9258A /* BST.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BST.h; sourceTree = "<group>"; };
+		5208450A21BF301E00B9258A /* AVL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AVL.cpp; sourceTree = "<group>"; };
+		5208450B21BF301E00B9258A /* AVL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVL.h; sourceTree = "<group>"; };
 		5208450C21BF301F00B9258A /* WindowsEndlines */ = {isa = PBXFileReference; lastKnownFileType = folder; path = WindowsEndlines; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,9 +77,8 @@
 		520844F121BF2D2200B9258A /* Lab8 */ = {
 			isa = PBXGroup;
 			children = (
-				5208450A21BF301E00B9258A /* BST.cpp */,
-				5208450B21BF301E00B9258A /* BST.h */,
-				5208450921BF301E00B9258A /* BSTInterface.h */,
+				5208450A21BF301E00B9258A /* AVL.cpp */,
+				5208450B21BF301E00B9258A /* AVL.h */,
 				5208450821BF301E00B9258A /* Node.h */,
 				5208450C21BF301F00B9258A /* WindowsEndlines */,
 				520844FF21BF2EA800B9258A /* AVLInterface.h */,
@@ -160,7 +158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				520844F321BF2D2200B9258A /* main.cpp in Sources */,
-				5208450D21BF301F00B9258A /* BST.cpp in Sources */,
+				5208450D21BF301F00B9258A /* AVL.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

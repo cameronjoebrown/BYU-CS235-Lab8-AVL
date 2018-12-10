@@ -22,7 +22,6 @@ public:
     ~Node() {
         
     }
-    
     int getData() const {
         return data;
     }
@@ -32,7 +31,6 @@ public:
     NodeInterface* getRightChild() const {
         return rightChild;
     }
-    
     Node* leftChild;
     Node* rightChild;
     int data;
