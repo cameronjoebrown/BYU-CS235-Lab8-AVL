@@ -28,6 +28,11 @@ public:
     void clearHelper(Node* T);
     int traverseTree(Node* T);
     
+    void rotateLeft(Node *&T);
+    void rotateRight(Node *&T);
+    void rebalance(Node *T);
+    void updateHeight(Node *T);
+    
 private:
     Node* root;
 };

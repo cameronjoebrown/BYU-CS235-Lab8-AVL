@@ -129,4 +129,37 @@ void AVL :: clearHelper(Node* T) {
     return;
 }
 
+void AVL :: rotateLeft(Node *&T){
+    
+}
+void AVL :: rotateRight(Node *&T){
+    
+}
+
+
+void AVL :: rebalance(Node *T){
+    
+}
+
+void AVL :: updateHeight(Node *T) {
+    if(T->leftChild && T->rightChild)
+    {
+        if(T->leftChild->height > T->rightChild->height)
+            T->height = T->leftChild->height + 1;
+        else
+            T->height = T->rightChild->height + 1;
+    }
+    else if(T->rightChild)
+    {
+        T->height = T->rightChild->height + 1;
+    }
+    else if(T->leftChild)
+    {
+        T->height = T->leftChild->height + 1;
+    }
+    else
+    {
+        T->height = 0;
+    }
+}
 
