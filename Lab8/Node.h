@@ -9,72 +9,71 @@
 #ifndef Node_h
 #define Node_h
 
-#include <stdio.h>
 #include "NodeInterface.h"
+#include <iostream>
+using namespace std;
 
 class Node : public NodeInterface {
+    friend class AVL;
+    
 public:
-    Node* leftChild;
-    Node* rightChild;
-    int data;
+    Node *leftChild;
+    Node *rightChild;
+    int val;
     int height;
     
-    Node(int value, Node* L = nullptr, Node* R = nullptr, int treeHeight = 0) {
-        data = value;
-        leftChild = L;
-        rightChild = R;
-        height = treeHeight;
+    Node(int value) {
+        val = value;
+        leftChild = NULL;
+        rightChild = NULL;
+        height = 0;
     }
-    
-    ~Node() {
-        
-    }
+    ~Node() {}
     
     int getData() const {
-        return data;
+        return val;
     }
     
-    NodeInterface* getLeftChild() const {
+    NodeInterface * getLeftChild() const {
         return leftChild;
     }
     
-    NodeInterface* getRightChild() const {
+    NodeInterface * getRightChild() const {
         return rightChild;
     }
     
-    int getHeight(){
+    int getHeight() {
         int leftHeight = 0;
-        int rightHeight = 0;
-        if (leftChild != nullptr) {
+        int rghtHeight = 0;
+        if (leftChild != NULL) {
             leftHeight = leftChild->getHeight();
         }
-        if (rightChild != nullptr) {
-            rightHeight = rightChild->getHeight();
+        if (rightChild != NULL) {
+            rghtHeight = rightChild->getHeight();
         }
-        if (leftHeight > rightHeight) {
+        if (leftHeight > rghtHeight) {
             return leftHeight + 1;
         }
         else {
-            return rightHeight + 1;
+            return rghtHeight + 1;
         }
-        
     }
-    int getBalance(Node *T){
-        int rightHeight;
+    int getBalance() {
+        int rghtHeight;
         int leftHeight;
-        if (rightChild != nullptr) {
-            rightHeight = rightChild->getHeight();
+        if (rightChild != NULL) {
+            rghtHeight = rightChild->getHeight();
         }
         else {
-            rightHeight = 0;
+            rghtHeight = 0;
         }
-        if (leftChild != nullptr) {
+        if (leftChild != NULL) {
             leftHeight = leftChild->getHeight();
         }
         else {
             leftHeight = 0;
         }
-        return rightHeight - leftHeight;
+        return rghtHeight - leftHeight;
     }
 };
 

@@ -9,7 +9,7 @@
 #ifndef AVL_h
 #define AVL_h
 
-#include <stdio.h>
+#include "NodeInterface.h"
 #include "AVLInterface.h"
 #include "Node.h"
 
@@ -17,24 +17,24 @@ using namespace std;
 
 class AVL : public AVLInterface {
 public:
+    Node* root;
+    Node* T;
     AVL();
     ~AVL();
-    NodeInterface* getRootNode() const;
-    bool add(int val);
-    bool addHelper(Node* &T, int val);
-    bool remove(int val);
-    bool removeHelper(Node* &T, int val);
-    void clear();
-    void clearHelper(Node* T);
-    int traverseTree(Node* T);
     
+    NodeInterface * getRootNode() const;
+    bool add(int data);
+    bool remove(int data);
+    void clear();
+    bool insert(Node *&T, int val);
+    bool removeNode(Node *&T, int val);
+    Node* traverseTree(Node* &T);
+    void deleteNodes(Node *T);
     void rotateLeft(Node *&T);
     void rotateRight(Node *&T);
-    void rebalance(Node *T);
-    void updateHeight(Node *T);
-    
-private:
-    Node* root;
+    void rotateRightLeft(Node *&T);
+    void rotateLeftRight(Node *&T);
+    bool rebalance(Node *&T, int val);
 };
 
 #endif /* AVL_h */

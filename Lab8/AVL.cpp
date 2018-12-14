@@ -7,159 +7,184 @@
 //
 
 #include "AVL.h"
+#include "Node.h"
+#include <iostream>
 
-AVL :: AVL() {
-    root = nullptr;
+using namespace std;
+
+AVL::AVL() {
+    root = NULL;
 }
-AVL :: ~AVL() {
+AVL::~AVL() {
     clear();
 }
-
-NodeInterface* AVL :: getRootNode() const {
+NodeInterface * AVL::getRootNode() const {
     return root;
 }
-bool AVL :: add(int val) {
-    if(root == nullptr) {
-        Node* newRoot = new Node(val);
-        root = newRoot;
-        return true;
-    }
-    else if(addHelper(this->root, val)) {
-        return true;
-    }
-    else {
-        return false;
-    }
+
+bool AVL::add(int val) {
+    return insert(root, val);
 }
 
-bool AVL :: addHelper(Node* &T, int val) {
-    if(T == nullptr) {
+bool AVL::remove(int val) {
+    bool removeTrue = removeNode(root, val);
+    rebalance(root, val);
+    return removeTrue;
+}
+
+void AVL::clear() {
+    deleteNodes(root);
+    root = NULL;
+}
+bool AVL::insert(Node *&T, int val) {
+    if (T == NULL) {
         T = new Node(val);
+        T->height = 0;
         return true;
     }
-    else if(T->data < val) {
-        return addHelper(T->rightChild, val);
-    }
-    else if(T->data > val) {
-        return addHelper(T->leftChild, val);
-    }
-    else {
+    if (T->val == val) {
         return false;
     }
+    if (T->val < val) {
+        bool nodeBool = insert(T->rightChild, val);
+        if (nodeBool == true) {
+            if(T->getBalance() > 1) {
+                rotateLeft(T);
+            }
+            if (T->getBalance() < -1) {
+                rotateRight(T);
+            }
+        }
+        return nodeBool;
+    }
+    else if (T->val > val) {
+        bool nodeBool2 = insert(T->leftChild, val);
+        if (nodeBool2 == true) {
+            if (T->getBalance() > 1) {
+                rotateLeft(T);
+            }
+            if(T->getBalance() < -1) {
+                rotateRight(T);
+            }
+        }
+        return nodeBool2;
+    }
+    if (T->getBalance() > 1) {
+        rotateLeft(T);
+    }
+    if (T->getBalance() < -1) {
+        rotateRight(T);
+    }
+    return false;
 }
-
-bool AVL :: remove(int val) {
-    return removeHelper(root, val);
-}
-
-bool AVL :: removeHelper(Node* &T, int val) {
-    if(T == nullptr) {
+bool AVL::removeNode(Node *&T, int val) {
+    bool removeOne;
+    bool removeTwo;
+    if (T == NULL) {
         return false;
     }
-    else if(val == T->data) {
-        if(T->leftChild == nullptr && T->rightChild == nullptr) {
-            Node* tempNode = T;
-            T = nullptr;
-            delete tempNode;
-            return true;
-        }
-        if (T->rightChild != nullptr && T->leftChild == nullptr) {
-            Node* tempNode = T;
-            T = T->rightChild;
-            delete tempNode;
-            return true;
-        }
-        if (T->rightChild == nullptr && T->leftChild != nullptr) {
-            Node* tempNode = T;
-            T = T->leftChild;
-            delete tempNode;
-            return true;
-        }
-        else {
-            T->data = traverseTree(T->leftChild);
-            return removeHelper(T->leftChild, T->data);
-        }
+    if (val < T->val) {
+        removeOne = removeNode(T->leftChild, val);
+        rebalance(T, val);
+        return removeOne;
     }
-    else if(val < T->data) {
-        return removeHelper(T->leftChild, val);
+    if (val > T->val) {
+        removeTwo = removeNode(T->rightChild, val);
+        rebalance(T, val);
+        return removeTwo;
     }
-    else {
-        return removeHelper(T->rightChild, val);
+    if(T->leftChild == NULL && T->rightChild == NULL) {
+        delete T;
+        T = NULL;
+        return true;
     }
+    if (T->rightChild != NULL && T->leftChild == NULL) {
+        Node* tempNode = T->rightChild;
+        delete T;
+        T = tempNode;
+        rebalance(T, val);
+        return true;
+    }
+    if (T->rightChild == NULL && T->leftChild != NULL) {
+        Node* tempNode = T->leftChild;
+        delete T;
+        T = tempNode;
+        rebalance(T, val);
+        return true;
+    }
+    Node* tempNode = traverseTree(T->leftChild);
+    tempNode->leftChild = T->leftChild;
+    tempNode->rightChild = T->rightChild;
+    delete T;
+    T = tempNode;
+    return true;
 }
-
-int AVL :: traverseTree(Node *T) {
-    if (T == nullptr) {
-        return -1;
+Node* AVL::traverseTree(Node *&T) {
+    if (T->rightChild == NULL) {
+        Node * tempNode = T;
+        T = T->leftChild;
+        return tempNode;
     }
-    int currVal = T->data;
-    Node* left = T->leftChild;
-    if (left != nullptr) {
-        int leftVal = traverseTree(left);
-        if (leftVal > currVal) {
-            currVal = leftVal;
-        }
-    }
-    
-    Node* right = T->rightChild;
-    if (right != nullptr) {
-        int rightVal = traverseTree(right);
-        if (rightVal > currVal) {
-            currVal = rightVal;
-        }
-    }
-    return currVal;
+    Node *tempNode = traverseTree(T->rightChild);
+    rebalance(T, T->val);
+    return tempNode;
 }
-void AVL :: clear() {
-    clearHelper(root);
-    root = nullptr;
-}
-
-void AVL :: clearHelper(Node* T) {
-    if(T == nullptr) {
+void AVL::deleteNodes(Node *T) {
+    if (T == NULL) {
         return;
     }
-    else if(T->leftChild != nullptr) {
-        clearHelper(T->leftChild);
+    if (T->leftChild != NULL) {
+        deleteNodes(T->leftChild);
     }
-    else if(T->rightChild != nullptr) {
-        clearHelper(T->rightChild);
+    if (T->rightChild != NULL) {
+        deleteNodes(T->rightChild);
     }
     delete T;
     return;
 }
-
-void AVL :: rotateLeft(Node *&T){
-    
-}
-void AVL :: rotateRight(Node *&T){
-    
-}
-
-
-void AVL :: rebalance(Node *T){
-    
-}
-
-void AVL :: updateHeight(Node *T) {
-    if(T->leftChild && T->rightChild)
-    {
-        if(T->leftChild->height > T->rightChild->height)
-            T->height = T->leftChild->height + 1;
-        else
-            T->height = T->rightChild->height + 1;
+bool AVL::rebalance(Node *&T, int val) {
+    if(T == NULL) {
+        return false;
     }
-    else if(T->rightChild)
-    {
-        T->height = T->rightChild->height + 1;
+    if (T->getBalance() > 1) {
+        rotateLeft(T);
     }
-    else if(T->leftChild)
-    {
-        T->height = T->leftChild->height + 1;
+    else if (T->getBalance() < -1) {
+        rotateRight(T);
     }
-    else
-    {
-        T->height = 0;
-    }
+    rebalance(T->leftChild, val);
+    rebalance(T->rightChild, val);
+    return false;
 }
 
+void AVL::rotateLeft(Node *&T) {
+    if (T == NULL) {
+        return;
+    }
+    if (T->rightChild->getBalance() <= -1) {
+        rotateRightLeft(T->rightChild);
+    }
+    rotateLeftRight(T);
+}
+
+void AVL::rotateRight(Node *&T) {
+    if (T == NULL) {
+        return;
+    }
+    if (T->leftChild->getBalance() >= 1) {
+        rotateLeftRight(T->leftChild);
+    }
+    rotateRightLeft(T);
+}
+void AVL::rotateLeftRight(Node *&T) {
+    Node * newNode = T->rightChild;
+    T->rightChild = newNode->leftChild;
+    newNode->leftChild = T;
+    T = newNode;
+}
+void AVL::rotateRightLeft(Node* &T) {
+    Node *newNode = T->leftChild;
+    T->leftChild = newNode->rightChild;
+    newNode->rightChild = T;
+    T = newNode;
+}
